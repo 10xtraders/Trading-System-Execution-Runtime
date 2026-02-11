@@ -1,108 +1,100 @@
-## 🚀 New: Cloud-Native TSaaS Platform for Freqtrade — AI-Enhanced + Developer-Controlled
+# Trading System Execution Runtime
 
-Hey everyone 👋
+### Cloud-Native Infrastructure for Deterministic Deployment and Operation of Automated Trading Systems
 
-We’re excited to introduce something the [**Freqtrade community**](https://www.freqtrade.io/en/stable/) has needed for a long time:
+This repository documents a cloud-native execution runtime for automated trading systems.
 
-A [**cloud-native, AI-powered TSaaS platform**](https://10xtraders.ai) that lets you build, test, and run your Freqtrade strategies in the cloud — instantly.
+The platform provides a governed environment for deploying, operating, and monitoring trading strategies within managed Kubernetes infrastructure — without requiring users to operate their own clusters or persistent local processes.
 
-No more CLI headaches, YAML tuning, or DevOps fire drills.
-
----
-
-### 🚀 What It Is
-
-This platform lets you:
-
-- ✅ **Upload or build your own `strategy with AI`**
-- ✅ **Auto-deploy live or paper bots with 1-click Kubernetes orchestration**
-- ✅ **Use AI tools to:**
-  - Generate new strategies from scratch (GPT-powered)
-  - Add fragility filters and pre-positioning risk models *(coming soon)*
-- ✅ **View real-time candle charts + trade overlays via TradingView charts**
-- ✅ **Export your bot + strategy if you prefer to self-host** — you keep full control
-- ✅ **Works 100% with native Freqtrade strategies and config**
+It functions as a controlled execution layer between strategy logic and exchange connectivity.
 
 ---
 
-### 🔐 Open Source Compliance & Privacy
+## Core Capabilities
 
-- We use Freqtrade (GPLv3) as the core engine
-- Our platform is a hosted service — no code redistribution = GPL compliant
-- Your strategies and API keys stay private — we never log or share them
+* Kubernetes-based orchestration for live and paper trading systems
+* Per-deployment namespace isolation
+* Dynamic strategy injection at runtime
+* Deterministic lifecycle management (deploy, start, stop, restart, terminate)
+* Real-time logs, health monitoring, and status endpoints
+* Automated ingress provisioning per deployment
+* Strategy and configuration export for self-hosting
 
----
-
-### 📈 Who It’s For
-
-- Developers and Traders who want to focus on strategy, not infrastructure
-- Algo traders looking for AI tooling without black-box lock-in
-- Freqtrade users who want an upgrade path to production trading
+This is execution infrastructure, not a strategy marketplace and not a black-box automation service.
 
 ---
 
-### 🛠️ Built For the Freqtrade Ecosystem
+## Architecture Overview
 
-We’re Freqtrade-native by design — this isn’t a wrapper. You can:
+Each trading system instance is:
 
-- Deploy any Freqtrade-compatible `strategy`. Check some [**here**](https://github.com/freqtrade/freqtrade-strategies/tree/main) from Freqtrade and [**this**](https://github.com/davidzr/freqtrade-strategies/tree/main/strategies) as provided by [**@davidzr**](https://github.com/davidzr) 
-- Create your custom `config` for every strategy
-- Live view each bot execution logs
+1. Assigned a unique namespace
+2. Provisioned with runtime configuration
+3. Injected with strategy code dynamically
+4. Deployed via Helm-rendered Kubernetes manifests
+5. Exposed through secure ingress
+6. Observable through structured logging and health endpoints
 
----
-
-### 📬 Try It (Free Paper Bot Plan Available)
-
-🔗 [https://10xtraders.ai](https://10xtraders.ai)
-
-You’ll get:
-
-- 1 free paper bot
-- AI strategy generation credits
-- Real-time trade logging and performance tracking
+The runtime is designed for isolation, reproducibility, and operational clarity.
 
 ---
 
-### 🙌 Let’s Collaborate
+## AI-Assisted Tooling (Optional)
 
-If you:
+* Strategy scaffolding from structured prompts
+* Parameter iteration assistance
+* Risk and fragility filter scaffolding (under development)
 
-- Have a cool strategy to showcase
-- Want to contribute to integration ideas
-- Have feedback from Freqtrade usage pain points
-
-Drop a comment or DM. We’re building this with and for the Freqtrade community.
-
-Thanks,  
-**10XTraders.ai**
+All generated strategies remain editable and exportable.
 
 ---
 
-## 📦 How to Deploy Your own Bot.
+## Open Source Compliance
 
-You can deploy a Freqtrade bot to our [**cloud**](https://10xtarders.ai). Just initiate a chat on our platform  
-You can clone our [**repo*](https://github.com/10xtraders/Cloud-Native-TSaaS-Platform-for-Freqtrade-AI-Enhanced-Developer-Controlled) and follow below instructions. 
+The runtime operates using Freqtrade (GPLv3) as the execution engine.
 
-### **Summary / Instructions**
+It is operated strictly as a hosted service without redistribution of source code.
 
-- **The config**: Drop in any [Freqtrade sample config](https://www.freqtrade.io/en/stable/configuration/) or your own.
-- **Your API payload** must have these four keys:  
-  - `namespace`: Unique namespace (per bot/strategy instance)
-  - `strategy_class`: Python class name of your strategy (e.g. `MyStrategy`)
-  - `strategy_code`: Your strategy code as a Python string
-  - `config`: The Freqtrade config dictionary (JSON-serializable)
-- **The backend** Run the python code and point to the folder where you saved the heml chart [**from**](https://github.com/DerSalvador/freqtrade-k8s-helm-chart/tree/develop).
-- **Kubernetes ingress** is auto-created for each bot for secure access.
+Users retain ownership of:
 
-### **Sample API Call**
+* Strategy code
+* Configuration files
+* API credentials
 
-```json
-POST /deploy-bot
-Content-Type: application/json
+No strategy logic is redistributed or exposed.
 
-{
-  "namespace": "simplersistrategy1747867348688vgueu8",
-  "strategy_class": "Simplersistrategy1747867348688vgueu8",
-  "strategy_code": "class Simplersistrategy1747867348688vgueu8(...): ...", 
-    "config": {"botName": "simplersistrategy1747867348688vgueu8", "dry_run": true, "bot_name": "MyBot", "exchange": {"key": "youremail@yoursite.com", "uid": "", "name": "exchange_name", "secret": "Secret", "sandbox": false, "password": "", "enable_ws": true, "log_responses": false, "only_from_ccxt": false, "pair_blacklist": ["DOGE/USDT", "SHIB/USDT"], "pair_whitelist": ["AVAX/USDT", "DOT/USDT", "LINK/USDT", "UNI/USDT", "MATIC/USDT", "LTC/USDT", "ATOM/USDT", "NEAR/USDT", "FIL/USDT", "AAVE/USDT", "SAND/USDT", "GRT/USDT", "FTM/USDT", "ALGO/USDT", "ICP/USDT"], "unknown_fee_rate": 0, "skip_open_order_update": false, "markets_refresh_interval": 60}, "stoploss": -0.1, "strategy": "simplersistrategy1747867348688vgueu8", "telegram": {"token": "", "chat_id": "", "enabled": false}, "enable_ws": true, "internals": {"heartbeat_interval": 60, "process_throttle_secs": 5}, "pairlists": [{"method": "StaticPairList"}, {"method": "VolumePairList", "sort_key": "quoteVolume", "number_assets": 20, "refresh_period": 1800}, {"method": "AgeFilter", "min_days_listed": 10}, {"method": "PrecisionFilter"}, {"method": "PriceFilter", "min_price": 0.0000001, "low_price_ratio": 0.01}, {"method": "SpreadFilter", "max_spread_ratio": 0.005}, {"method": "RangeStabilityFilter", "lookback_days": 10, "refresh_period": 1440, "min_rate_of_change": 0.01}], "timeframe": "5m", "api_server": {"enabled": true, "password": "Scret", "username": "username", "ws_token": "SOME_RANDOM_WS_TOKEN", "verbosity": "error", "listen_port": 8080, "CORS_origins": "[]", "enable_openapi": false, "jwt_secret_key": "CHANGE_ME_TO_RANDOM_SECRET", "listen_ip_address": "127.0.0.1"}, "configName": "simplersistrategy1747867348688vgueu8", "margin_mode": "cross", "minimal_roi": {"0": 0.04, "30": 0.02, "60": 0.01}, "order_types": {"exit": "limit", "entry": "limit", "stoploss": "market", "force_exit": "market", "force_entry": "market", "emergency_exit": "market", "stoploss_on_exchange": false, "stoploss_on_exchange_interval": 60}, "protections": [{"method": "StoplossGuard", "trade_limit": 4, "only_per_pair": false, "stop_duration_candles": 60, "lookback_period_candles": 60}, {"method": "CooldownPeriod", "stop_duration_candles": 20}, {"method": "MaxDrawdown", "trade_limit": 20, "max_allowed_drawdown": 0.2, "stop_duration_candles": 10, "lookback_period_candles": 200}, {"method": "LowProfitPairs", "trade_limit": 1, "required_profit": 0.02, "stop_duration_candles": 2, "lookback_period_candles": 360}], "exit_pricing": {"price_side": "ask", "order_book_top": 1, "use_order_book": false, "price_last_balance": 0}, "stake_amount": 1000, "trading_mode": "spot", "entry_pricing": {"price_side": "bid", "order_book_top": 1, "use_order_book": false, "price_last_balance": 0, "check_depth_of_market": {"enabled": false, "bids_to_ask_delta": 1}}, "initial_state": "stopped", "strategy_path": "user_data/strategies/", "trailing_stop": false, "dry_run_wallet": "10000", "stake_currency": "USDT", "max_open_trades": 6, "unfilledtimeout": {"exit": 30, "unit": "minutes", "entry": 10, "exit_timeout_count": 0}, "use_exit_signal": true, "dataformat_ohlcv": "json", "exit_profit_only": false, "available_capital": 0, "dataformat_trades": "jsongz", "exit_profit_offset": 0, "force_entry_enable": true, "order_time_in_force": {"exit": "gtc", "entry": "gtc"}, "fiat_display_currency": "USD", "amount_reserve_percent": 0.05, "tradable_balance_ratio": 0.99, "trailing_stop_positive": 0.005, "amend_last_stake_amount": false, "disable_dataframe_checks": false, "markets_refresh_interval": 60, "process_only_new_candles": true, "cancel_open_orders_on_exit": false, "ignore_roi_if_entry_signal": false, "position_adjustment_enable": false, "last_stake_amount_min_ratio": 0.5, "max_entry_position_adjustment": -1, "trailing_stop_positive_offset": 0.0051, "trailing_only_offset_is_reached": false, "ignore_buying_expired_candle_after": 0}
-}
+---
+
+## Intended Users
+
+* Quantitative developers
+* Advanced traders
+* Strategy researchers
+* Operators requiring managed execution infrastructure
+
+---
+
+## Programmatic Deployment
+
+Trading systems may be deployed via API.
+
+Requests must include:
+
+* `namespace` — unique per deployment
+* `strategy_class` — Python class name
+* `strategy_code` — strategy code as a Python string
+* `config` — JSON-serializable configuration
+
+Backend infrastructure includes:
+
+* Helm-based Kubernetes deployment
+* Dynamic manifest generation
+* Per-namespace isolation
+* Automated ingress provisioning
+* Structured logging and health endpoints
+
+---
+
+This project provides a governed, cloud-native execution runtime for automated trading systems in production environments.
+
+— 10XTraders.ai

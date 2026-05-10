@@ -1,55 +1,147 @@
 # Trading System Execution Runtime
 
-### Cloud-Native Infrastructure for Deterministic Deployment and Operation of Automated Trading Systems
+## Live Execution Infrastructure for Executable Trading Systems
 
-This repository documents a cloud-native execution runtime for automated trading systems.
+10XT provides a live execution runtime for turning strategy logic into continuously operating trading systems.
 
-The platform provides a governed environment for deploying, operating, and monitoring trading strategies within managed Kubernetes infrastructure — without requiring users to operate their own clusters or persistent local processes.
+The platform supports strategy import, runtime initialization, live and paper execution, operational monitoring, and continuous refinement while systems remain active.
 
-It functions as a controlled execution layer between strategy logic and exchange connectivity.
+It is not a strategy marketplace, signal service, or black-box trading product.
 
----
-
-## Core Capabilities
-
-* Kubernetes-based orchestration for live and paper trading systems
-* Per-deployment namespace isolation
-* Dynamic strategy injection at runtime
-* Deterministic lifecycle management (deploy, start, stop, restart, terminate)
-* Real-time logs, health monitoring, and status endpoints
-* Automated ingress provisioning per deployment
-* Strategy and configuration export for self-hosting
-
-This is execution infrastructure, not a strategy marketplace and not a black-box automation service.
+It is execution infrastructure for systematic operators.
 
 ---
 
-## Architecture Overview
+# What This Solves
+
+Most trading workflows stop at:
+
+- strategy generation
+- Pine Script indicators
+- backtests
+- TradingView alerts
+- webhook forwarding
+- disconnected execution tooling
+
+10XT focuses on the next operational layer:
+
+- turning strategy logic into executable systems
+- initializing runtime automatically
+- observing live execution behavior
+- refining systems against real operational conditions
+
+This is the layer between strategy expression and production execution.
+
+---
+
+# Core Capabilities
+
+- Instant runtime initialization for imported or generated strategy logic
+- Live and paper execution environments
+- Kubernetes-based orchestration for isolated trading systems
+- Per-system namespace isolation
+- Dynamic strategy injection at runtime
+- Deterministic lifecycle controls: start, stop, restart, terminate
+- Real-time logs, runtime status, and health monitoring
+- Continuous runtime-aware refinement workflows
+- Exchange connectivity through supported execution engines
+- Strategy and configuration export for self-hosting
+
+---
+
+# Runtime Workflow
+
+The platform operates as a continuous execution environment.
+
+Typical workflow:
+
+strategy logic  
+→ executable runtime initialization  
+→ live execution state  
+→ operational visibility  
+→ continuous refinement  
+
+Systems initialize directly into runtime environments where execution behavior, logs, and operational state remain observable while systems operate.
+
+Refinements can be applied continuously while systems remain active.
+
+---
+
+# Architecture Overview
 
 Each trading system instance is:
 
-1. Assigned a unique namespace
-2. Provisioned with runtime configuration
-3. Injected with strategy code dynamically
-4. Deployed via Helm-rendered Kubernetes manifests
-5. Exposed through secure ingress
-6. Observable through structured logging and health endpoints
+- Assigned a unique namespace
+- Provisioned with runtime configuration
+- Injected with strategy code dynamically
+- Deployed through Helm-rendered Kubernetes manifests
+- Exposed through secure ingress
+- Observable through structured logging and health endpoints
 
-The runtime is designed for isolation, reproducibility, and operational clarity.
+The runtime is designed for:
 
----
-
-## AI-Assisted Tooling (Optional)
-
-* Strategy scaffolding from structured prompts
-* Parameter iteration assistance
-* Risk and fragility filter scaffolding (under development)
-
-All generated strategies remain editable and exportable.
+- operational isolation
+- reproducibility
+- deterministic execution behavior
+- runtime visibility
+- continuous refinement
 
 ---
 
-## Open Source Compliance
+# Live Strategy Refinement
+
+The runtime supports continuous refinement of strategy behavior while systems are active.
+
+Users can:
+
+- Import or define strategy logic
+- Initialize systems directly into live or paper runtime
+- Inspect execution state and runtime behavior
+- Apply refinements while systems remain active
+- Export strategy and configuration artifacts when needed
+
+The core workflow is:
+
+strategy logic  
+→ executable runtime  
+→ live operational visibility  
+→ continuous refinement  
+
+---
+
+# Intended Users
+
+- Quantitative developers
+- Pine Script developers
+- Advanced systematic traders
+- Strategy researchers
+- Execution-focused operators
+- Traders requiring managed runtime infrastructure
+
+---
+
+# Programmatic Deployment
+
+Trading systems may be initialized programmatically through API requests.
+
+Requests include:
+
+- namespace — unique per deployment
+- strategy_class — Python class name
+- strategy_code — strategy code as a Python string
+- config — JSON-serializable configuration
+
+Backend infrastructure includes:
+
+- Helm-based Kubernetes deployment
+- Dynamic manifest generation
+- Per-namespace isolation
+- Automated ingress provisioning
+- Structured logging and health endpoints
+
+---
+
+# Open Source Compliance
 
 The runtime operates using Freqtrade (GPLv3) as the execution engine.
 
@@ -57,44 +149,26 @@ It is operated strictly as a hosted service without redistribution of source cod
 
 Users retain ownership of:
 
-* Strategy code
-* Configuration files
-* API credentials
+- Strategy code
+- Configuration files
+- API credentials
 
 No strategy logic is redistributed or exposed.
 
 ---
 
-## Intended Users
+# Operational Philosophy
 
-* Quantitative developers
-* Advanced traders
-* Strategy researchers
-* Operators requiring managed execution infrastructure
+10XT is not designed around signal distribution or passive automation.
 
----
+The platform is designed around:
 
-## Programmatic Deployment
+- executable systems
+- operational visibility
+- runtime control
+- continuous refinement
+- deterministic execution infrastructure
 
-Trading systems may be deployed via API.
-
-Requests must include:
-
-* `namespace` — unique per deployment
-* `strategy_class` — Python class name
-* `strategy_code` — strategy code as a Python string
-* `config` — JSON-serializable configuration
-
-Backend infrastructure includes:
-
-* Helm-based Kubernetes deployment
-* Dynamic manifest generation
-* Per-namespace isolation
-* Automated ingress provisioning
-* Structured logging and health endpoints
-
----
-
-This project provides a governed, cloud-native execution runtime for automated trading systems in production environments.
+This repository documents a live execution engineering runtime for systematic trading systems.
 
 — 10XTraders.ai
